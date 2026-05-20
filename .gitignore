@@ -1,0 +1,6 @@
+/*.bash
+Mason.lock
+target/
+.vscode/
+.venv/
+graph.png
