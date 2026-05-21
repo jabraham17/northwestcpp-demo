@@ -24,6 +24,6 @@ if __name__ == "__main__":
     plt.scatter(xs, ys, s=1)
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.title("Points")
+    plt.title("sigmoid")
     plt.savefig(os.path.dirname(__file__) + "/graph.png")
     print("Saved graph.png")
