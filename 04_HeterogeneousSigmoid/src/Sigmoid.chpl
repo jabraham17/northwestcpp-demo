@@ -13,11 +13,10 @@ proc sigmoid(arr: [?dom] ?eltType, gpuPercent) {
     const localNodeDom = dom.localSubdomain();
 
     /* Split the data between the CPUs and GPUs, then launch both in parallel */
-    const localN = localNodeDom.size;
-    const localGpuN = (localN * gpuPercent):int;
+    const (gpuDom, cpuDom) = splitDom(localNodeDom, gpuPercent);
     cobegin {
-      sigmoidGpu(result, arr, localNodeDom[         ..<localGpuN], here.gpus);
-      sigmoidCpu(result, arr, localNodeDom[localGpuN..          ]);
+      sigmoidGpu(result, arr, gpuDom, here.gpus);
+      sigmoidCpu(result, arr, cpuDom);
     }
   }
   return result;
@@ -45,6 +44,11 @@ proc sigmoidGpu(ref result, arr, dom, tgtLoc) {
   }
 }
 
+proc splitDom(dom, percent) {
+  const n = dom.size;
+  const lowN = (n * percent):int;
+  return (dom[dom.low..#lowN], dom[(dom.low+lowN)..]);
+}
 
 config const n = 100;
 config const print = false;
