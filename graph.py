@@ -1,4 +1,5 @@
 import sys
+import os
 import matplotlib.pyplot as plt
 
 def parse_points(text):
@@ -24,5 +25,5 @@ if __name__ == "__main__":
     plt.xlabel("x")
     plt.ylabel("y")
     plt.title("Points")
-    plt.savefig("graph.png")
+    plt.savefig(os.path.dirname(__file__) + "/graph.png")
     print("Saved graph.png")
